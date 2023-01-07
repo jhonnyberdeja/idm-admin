@@ -1,9 +1,13 @@
 const express = require("express");
+const path = require("path");
 
 const router = express.Router();
 
-router.get("/", (req, res)=>{
-    return res.send("Estoy en la api");
-})
+const clientFolder = path.resolve(__dirname + "/../../../../client/build");
+
+router.use("/", express.static(clientFolder));
+router.use("/*", (req, res)=>{
+    return res.sendFile(clientFolder+"/index.html")
+});
 
 module.exports = router;
